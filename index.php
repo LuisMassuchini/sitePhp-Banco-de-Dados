@@ -14,6 +14,19 @@
 
     if(isset($_POST['acao'])){
         //dados do form
+        $nome = strip_tags($_POST['nome']); //strip limpa todas as possiveis tags
+        $link = strip_tags($_POST['link']);
+
+        $sql = $pdo->prepare("INSERT INTO `TD.AULAS` VALUES (null,?,?)");
+
+        if($sql->execute(array($nome, $link))){
+            echo '<script>alert("Vídeo inserido com sucesso")</script>';
+
+        } else{
+            die("Error");
+        };
+
+
     };
 
     $sql = $pdo->prepare("SELECT * FROM `td.aulas`");
@@ -30,8 +43,8 @@
     ?>
     <h3>Inisira um vídeo aqui!</h3>
     <form method="post">
-        <input type="text" placeholder="nome do seu video...">
-        <input type="text" placeholder="link do seu vídeo...">
+        <input type="text" name="nome" placeholder="nome do seu video...">
+        <input type="text" name="link" placeholder="link do seu vídeo...">
         <input type="submit" name="acao" value="Cadastrar!">
     </form>
 
